@@ -5,7 +5,7 @@ sum(Tail, S),
 Result is Head + S.
 
 %elephant is bigger the a horse.
-bigger(elepahnt, horse).
+bigger(elephant, horse).
 bigger(horse, donkey).
 bigger(donkey, dog).
 bigger(donkey, monkey).
@@ -28,3 +28,12 @@ pogger() :- class(7), flass(8).
 % the is_bigger(X, Y) :- bigger(X, Z), is_bigger(Z, Y). function is difining itself
 % and using itself, this is called recursion
 
+% querry 1: is_bigger(elephant, monkey).
+% querry 2: is_bigger(elephant, X).
+
+% is_bigger(elephant, X). If X = horse, its treu  
+
+% querry 3: is_bigger(donkey, X), is_bigger(X, monkey), dit is als vraag,
+% is er een variablee X die voor bijde gevallen geldt. 
+% querry 4: is_bigger(donkey, X), is_bigger(Y, monkey).
+% geeft gwn waardes voor x en y. 
