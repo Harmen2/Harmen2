@@ -11,6 +11,7 @@ bigger(donkey, dog).
 bigger(donkey, monkey).
 %transitivty
 is_bigger(X, Y) :- bigger(X, Y).
+%dit is blijkbaar recursie
 is_bigger(X, Y) :- bigger(X, Z), is_bigger(Z, Y).
 
 %de :- betekend if 
@@ -37,3 +38,12 @@ pogger() :- class(7), flass(8).
 % is er een variablee X die voor bijde gevallen geldt. 
 % querry 4: is_bigger(donkey, X), is_bigger(Y, monkey).
 % geeft gwn waardes voor x en y. 
+
+cute(X) :- cat(X), cute(X).
+cat(luna).
+
+brother(X, Y) :- 
+    male(X),
+    parent(Z, Y),
+    parent(Z, X),
+    X \= Y.
