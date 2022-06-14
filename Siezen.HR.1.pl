@@ -47,3 +47,26 @@ brother(X, Y) :-
     parent(Z, Y),
     parent(Z, X),
     X \= Y.
+
+% X = [a| [b| [c| []]]]. = 
+% X = [a, b, c].
+
+% first predicate usning lists
+%concat_lists([1, 2, 3, 4], [dog, cow, tiger], L).
+% concat_lists(X, Y, Z) :- concat_lists([X | Y]) = concat_lists(Z). Nee deze is fout
+% Base case of 'concat_list/3'
+concat_lists([], List, List).
+
+% in the recursive step we remove the head and call the predicate on the shorter tail
+
+% Recursive step of 'concat_lists/3'
+concat_lists([Elem|List1], List2, [Elem|List3]) :- concat_lists(List1, List2, List3).
+% twee problem. Elem wordt van beide hoofden afgehaald, dus Elem wordt van L en van [1,2,3] afgehaald 
+% om vervolgens met de rest ervandoor te gaan
+
+% dus hij gaat terug naar de base case, waarbij list2 en list 3 hetzelfde worden, nadat alle elementen 
+% gestript zijn uit list 1. En vervolgens wordt list 1, samen met list 3 weer in elkaar gezet. Waarbij 
+% alle elementen uit list 1, bovenop de al bestaande lijst 2 in lijst 3 opgegooid worden. als het warde 
+% in omgekeerde volgorde 
+testrecursie([], []).
+testrecursie([A|B], [A|C]) :- testrecursie(B, C).
