@@ -38,9 +38,6 @@ pogger() :- class(7), flass(8).
 % is er een variablee X die voor bijde gevallen geldt. 
 % querry 4: is_bigger(donkey, X), is_bigger(Y, monkey).
 % geeft gwn waardes voor x en y. 
-<<<<<<< HEAD
-s
-=======
 
 cute(X) :- cat(X), cute(X).
 cat(luna).
@@ -50,4 +47,3 @@ brother(X, Y) :-
     parent(Z, Y),
     parent(Z, X),
     X \= Y.
->>>>>>> 899784a2bcb3a55011580c5e497a2b533d7a0d86
