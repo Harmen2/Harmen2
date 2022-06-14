@@ -37,3 +37,4 @@ pogger() :- class(7), flass(8).
 % is er een variablee X die voor bijde gevallen geldt. 
 % querry 4: is_bigger(donkey, X), is_bigger(Y, monkey).
 % geeft gwn waardes voor x en y. 
+s
