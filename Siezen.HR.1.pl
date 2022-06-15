@@ -81,4 +81,9 @@ inreverse([H|T], Result) :- Newresult = [Result|H], inreverse(T, Newresult).
 % waardoor hij op die manier een van begin naar groot kan maken.  
 % [NewResult|H] = Result. 
 % werkt niet, want we gebruiken de head altijd om nieuwe elmenten toe te voegen, en niet de tail. 
- 
+
+% [NewResult|H] = Result. “what where doing here is we have H, which is the atom that we want to 
+% include, and what we then need/want to say, the NewResult is a list of atoms, and we want to 
+% combine that but what we want is that H is used as an item and NewResult is used as a list and 
+% if you remember the bar syntax, it works the other way around( so [ Head = is used as an item, 
+% and | Tail = used as a list]"  
