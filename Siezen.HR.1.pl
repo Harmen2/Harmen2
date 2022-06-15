@@ -70,3 +70,12 @@ concat_lists([Elem|List1], List2, [Elem|List3]) :- concat_lists(List1, List2, Li
 % in omgekeerde volgorde 
 testrecursie([], []).
 testrecursie([A|B], [A|C]) :- testrecursie(B, C).
+
+% Dit is volgens mij nog een manier om een lijst te reversen
+inreverse([],[_]).
+inreverse([H|T], Result) :- Newresult = [Result|H], inreverse(T, Newresult).
+%volgens mij zijn er meerdere redenen waarom dit niet werkt,
+%eerste omdat het hoofd altijd een element moet zijn, ookal is de lijst leeg,want [ | [2]] kan niet.
+% daarnaast ook dat die base case niet werkt. 
+% de reden dant ik dacht dat dit werkte, was dat ik dacht dat hij [1|H] telkens bij de tail toevoegd.
+% waardoor hij op die manier een van begin naar groot kan maken.  
