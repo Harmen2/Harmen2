@@ -47,3 +47,4 @@ brother(X, Y) :-
     parent(Z, Y),
     parent(Z, X),
     X \= Y.
+s
