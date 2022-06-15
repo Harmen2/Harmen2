@@ -79,3 +79,6 @@ inreverse([H|T], Result) :- Newresult = [Result|H], inreverse(T, Newresult).
 % daarnaast ook dat die base case niet werkt. 
 % de reden dant ik dacht dat dit werkte, was dat ik dacht dat hij [1|H] telkens bij de tail toevoegd.
 % waardoor hij op die manier een van begin naar groot kan maken.  
+% [NewResult|H] = Result. 
+% werkt niet, want we gebruiken de head altijd om nieuwe elmenten toe te voegen, en niet de tail. 
+ 
