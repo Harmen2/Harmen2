@@ -71,12 +71,22 @@ concat_lists([Elem|List1], List2, [Elem|List3]) :- concat_lists(List1, List2, Li
 testrecursie([], []).
 testrecursie([A|B], [A|C]) :- testrecursie(B, C).
 
-%vraag 4
-atoms([], []).
-atoms([A|B], [A|C]) :- atom(A), atoms(B, C).
-atoms([_|B], C) :- atoms(B, C).
-%vraag 3
-membership(X, [A|_]) :- X = A. 
-membership(X, [_|C]) :- membership(X, C).
-membership([], []).
+% Dit is volgens mij nog een manier om een lijst te reversen
+inreverse([],[_]).
+inreverse([H|T], Result) :- Newresult = [Result|H], inreverse(T, Newresult).
+%volgens mij zijn er meerdere redenen waarom dit niet werkt,
+%eerste omdat het hoofd altijd een element moet zijn, ookal is de lijst leeg,want [ | [2]] kan niet.
+% daarnaast ook dat die base case niet werkt. 
+% de reden dant ik dacht dat dit werkte, was dat ik dacht dat hij [1|H] telkens bij de tail toevoegd.
+% waardoor hij op die manier een van begin naar groot kan maken.  
+% [NewResult|H] = Result. 
+% werkt niet, want we gebruiken de head altijd om nieuwe elmenten toe te voegen, en niet de tail. 
 
+% [NewResult|H] = Result. “what where doing here is we have H, which is the atom that we want to 
+% include, and what we then need/want to say, the NewResult is a list of atoms, and we want to 
+% combine that but what we want is that H is used as an item and NewResult is used as a list and 
+% if you remember the bar syntax, it works the other way around( so [ Head = is used as an item, 
+% and | Tail = used as a list]"  
+
+%[Result|H] = NewResult, hierbij zeg je, dat NewResult moet matchen met [Result | H]
+ 
