@@ -70,3 +70,13 @@ concat_lists([Elem|List1], List2, [Elem|List3]) :- concat_lists(List1, List2, Li
 % in omgekeerde volgorde 
 testrecursie([], []).
 testrecursie([A|B], [A|C]) :- testrecursie(B, C).
+
+%vraag 4
+atoms([], []).
+atoms([A|B], [A|C]) :- atom(A), atoms(B, C).
+atoms([_|B], C) :- atoms(B, C).
+%vraag 3
+membership(X, [A|_]) :- X = A. 
+membership(X, [_|C]) :- membership(X, C).
+membership([], []).
+
