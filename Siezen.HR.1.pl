@@ -90,3 +90,5 @@ inreverse([H|T], Result) :- Newresult = [Result|H], inreverse(T, Newresult).
 
 %[Result|H] = NewResult, hierbij zeg je, dat NewResult moet matchen met [Result | H]
  
+len([], 0).
+len([_ | Gist], Lenn2) :- len(Gist, Lenn), Lenn2 is Lenn  + 1. 
