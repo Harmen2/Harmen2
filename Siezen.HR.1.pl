@@ -106,3 +106,4 @@ recursion([_|Tails], Lengtetail) :- recursion(Tails, LengteTailkort), Lengtetail
 
 % op(400, xfx, bigger). % infix(want midden), non-associative(want () maken niet uit) 
 % op(400, xfx, is_bigger).
+:- print("Hello Harman").
