@@ -92,3 +92,14 @@ inreverse([H|T], Result) :- Newresult = [Result|H], inreverse(T, Newresult).
  
 len([], 0).
 len([_ | Gist], Lenn2) :- len(Gist, Lenn), Lenn2 is Lenn  + 1. 
+
+
+recursion([_|Tails], Lengtetail) :- recursion(Tails, LengteTailkort), Lengtetail is LengteTailkort + 1.
+% want hij heeft de vragen al telkens gesteld, dus als hij antwoord krijgt op de meest diepe vraag,
+% de vraag voor de base case, dan zal hij vantuit die diepte telkens weer naar boven werken.
+% hierdoor is recursion(Tails, LengteTailkort) = recursion([]], 0) waardoor hij door kan gaan na de comma
+% wat geeft Lengtetail is 0 + 1., en daardoor kan hij antwoord geven op de vraag daar boven die
+% al gesteld was, dus dan heb je recursion([a], 1), na de comma Lengtetail is 1 + 1. Want recursion(Tails, LengteTailkort)
+% vraagt het telkens aans aan recursion([_|Tails], Lengtetail), en als die vraag beantwoord is, dan heb je een
+% waarde voor Lengtetail, wat op de plek komt van LengteTailkort. En de lengte van de lijst die wordt 
+% gehouden op Tails. Want je stelt de vraag met die waarde. 
