@@ -107,3 +107,7 @@ recursion([_|Tails], Lengtetail) :- recursion(Tails, LengteTailkort), Lengtetail
 % op(400, xfx, bigger). % infix(want midden), non-associative(want () maken niet uit) 
 % op(400, xfx, is_bigger).
 :- print("Hello Harman").
+% :- consult('library.pl')  for including other files.
+% :- op(200, fy, small) gives enable to small(elephant) = small elephant
+% " it might be better to use fx instead of fy because now you can nest it"
+% like small small elepahnt" but thats a matter of semantics
