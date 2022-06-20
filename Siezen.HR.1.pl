@@ -102,4 +102,7 @@ recursion([_|Tails], Lengtetail) :- recursion(Tails, LengteTailkort), Lengtetail
 % al gesteld was, dus dan heb je recursion([a], 1), na de comma Lengtetail is 1 + 1. Want recursion(Tails, LengteTailkort)
 % vraagt het telkens aans aan recursion([_|Tails], Lengtetail), en als die vraag beantwoord is, dan heb je een
 % waarde voor Lengtetail, wat op de plek komt van LengteTailkort. En de lengte van de lijst die wordt 
-% gehouden op Tails. Want je stelt de vraag met die waarde. 
+% gehouden op Tails. Want je stelt de vraag met die waarde.
+
+% op(400, xfx, bigger). % infix(want midden), non-associative(want () maken niet uit) 
+% op(400, xfx, is_bigger).
