@@ -100,3 +100,27 @@ atoms([_|Tail], Result) :- atoms(Tail, Result).
 % ik denk dat dit zo werkt met prolog, met dat hij zecht, dat je eerst het probleem moet definen, (de querry)
 % En daarna een manier te vinden, hoe je dat gaat doen, na de :-.
 
+
+%[Result|H] = NewResult, hierbij zeg je, dat NewResult moet matchen met [Result | H]
+ 
+len([], 0).
+len([_ | Gist], Lenn2) :- len(Gist, Lenn), Lenn2 is Lenn  + 1. 
+
+
+recursion([_|Tails], Lengtetail) :- recursion(Tails, LengteTailkort), Lengtetail is LengteTailkort + 1.
+% want hij heeft de vragen al telkens gesteld, dus als hij antwoord krijgt op de meest diepe vraag,
+% de vraag voor de base case, dan zal hij vantuit die diepte telkens weer naar boven werken.
+% hierdoor is recursion(Tails, LengteTailkort) = recursion([]], 0) waardoor hij door kan gaan na de comma
+% wat geeft Lengtetail is 0 + 1., en daardoor kan hij antwoord geven op de vraag daar boven die
+% al gesteld was, dus dan heb je recursion([a], 1), na de comma Lengtetail is 1 + 1. Want recursion(Tails, LengteTailkort)
+% vraagt het telkens aans aan recursion([_|Tails], Lengtetail), en als die vraag beantwoord is, dan heb je een
+% waarde voor Lengtetail, wat op de plek komt van LengteTailkort. En de lengte van de lijst die wordt 
+% gehouden op Tails. Want je stelt de vraag met die waarde.
+
+% op(400, xfx, bigger). % infix(want midden), non-associative(want () maken niet uit) 
+% op(400, xfx, is_bigger).
+:- print("Hello Harman").
+% :- consult('library.pl')  for including other files.
+% :- op(200, fy, small) gives enable to small(elephant) = small elephant
+% " it might be better to use fx instead of fy because now you can nest it"
+% like small small elepahnt" but thats a matter of semantics
