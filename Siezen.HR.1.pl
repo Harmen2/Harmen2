@@ -87,3 +87,16 @@ inreverse([H|T], Result) :- Newresult = [Result|H], inreverse(T, Newresult).
 % combine that but what we want is that H is used as an item and NewResult is used as a list and 
 % if you remember the bar syntax, it works the other way around( so [ Head = is used as an item, 
 % and | Tail = used as a list]"  
+
+% Base case doesnt contain any atoms
+atomsx([],[]).
+atomsx([X|Tail], Result) :- atom(X), atomsx(Tail, [X|Result]). %Maar, "een lijst met 1 element, zal 
+% altijd het hoofd zijn, Dus zou je dan niet voor altijd de hoofd verandere?"
+atomsx([_|Tail], Result) :- atomsx(Tail, Result).
+%Dit is dus blijkbaar ook fout, want met recursie werkt dat niet zo.
+atoms([],[]).
+atoms([X|Tail],[X|Result]) :- atom(X), atoms(Tail, Result).
+atoms([_|Tail], Result) :- atoms(Tail, Result).
+% ik denk dat dit zo werkt met prolog, met dat hij zecht, dat je eerst het probleem moet definen, (de querry)
+% En daarna een manier te vinden, hoe je dat gaat doen, na de :-.
+
