@@ -95,7 +95,7 @@ atomsx([X|Tail], Result) :- atom(X), atomsx(Tail, [X|Result]). %Maar, "een lijst
 atomsx([_|Tail], Result) :- atomsx(Tail, Result).
 %Dit is dus blijkbaar ook fout, want met recursie werkt dat niet zo.
 atoms([],[]).
-atoms([X|Tail],[X|Result]) :- atom(X), atoms(Tail, Result).
+atoms([X|Tail],[X|Result]) :- atom(X),!, atoms(Tail, Result).
 atoms([_|Tail], Result) :- atoms(Tail, Result).
 % ik denk dat dit zo werkt met prolog, met dat hij zecht, dat je eerst het probleem moet definen, (de querry)
 % En daarna een manier te vinden, hoe je dat gaat doen, na de :-.
@@ -133,7 +133,7 @@ line(Dots, Symbol) :- print(Symbol), Dots2 is Dots - 1, line(Dots2, Symbol).
 
 draw(Begin, Eind) :- line(Begin, *), 
 Begin2 is Begin + 1, 
-print('nl'),
+nl,
 Eind >= Begin2, 
 draw(Begin2, Eind). 
 draw(Eind, Eind).
@@ -171,3 +171,49 @@ op(200, xfy, plonk).
 % donket and tiger, they come first as well
 % the operators all have lower precedence then plonk, so the () disaapear.
 
+% Question: Does xfy, does it "give values?" to the things on the left and right?
+% so 
+%:- op(100, yfx, ca).% and
+%:- op(200, xfy, cb).%  means that
+% they cannot be next to eachother because they arent 1 way 
+% and arent the same value and because of the patterns,
+% I think 
+:- op(100, yfx, ca).% and
+% 
+:- op(100, xfy, cb).%  would work with a cb ca b 
+
+% 3 ?- a cb l ca b = X cb Y.  
+%false. waarom faalt dit? Heeft met de "principle operator" temaken
+permutation([],[]).
+permutation(List, [Head|Permuation]):-
+select(Head, List, Rest),
+permutation(Rest, Permuation). % special recursion, it gives the answers like previous, but in the end.
+% every call of permutation adds one to it. 
+
+%add(_, [], _).
+%add(Item, [Head|Listed], X) :- \+ Item = Head, add(Item, Listed, X), X = [Item, Head|Listed].
+%add(_, List1, List2) :- List2 = List1. 
+
+add(Elem, List, Result) :- member(Elem, List),!, Result = List.
+
+add(Elem, List, [Elem | List]). 
+
+product([],1).
+product([H|Tail], Result) :-
+integer(H),
+product(Tail, TailProduct),
+!,
+Result is H * TailProduct.
+product([_|Tail], Result) :- 
+product(Tail, Result).
+% principle operator is volgens mij, de gene met laagste precedence?
+:- op(100, yfx, doom).
+:- op(99, xfy, fist).
+%het geeft false wanner de priority niet duidelijk is. 
+
+:- op(100, yfx, plink),
+op(200, xfy, plonk).
+% ?- tiger plink dog plink fish = X plink Y.
+% ?- cow plonk elephant plink bird = X plink Y.
+% ?- X = (lion plink tiger) plonk (horse plink donkey).
+% ?- kat doom mouse doom italian fist spouse = kat doom (mouse doom (italian fist) spouse). ???
