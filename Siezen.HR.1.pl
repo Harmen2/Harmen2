@@ -118,9 +118,56 @@ recursion([_|Tails], Lengtetail) :- recursion(Tails, LengteTailkort), Lengtetail
 % gehouden op Tails. Want je stelt de vraag met die waarde.
 
 % op(400, xfx, bigger). % infix(want midden), non-associative(want () maken niet uit) 
-% op(400, xfx, is_bigger).
+:- op(400, xfx, is_bigger).
 :- print("Hello Harman").
 % :- consult('library.pl')  for including other files.
 % :- op(200, fy, small) gives enable to small(elephant) = small elephant
 % " it might be better to use fx instead of fy because now you can nest it"
 % like small small elepahnt" but thats a matter of semantics
+subist([],_).
+subist([X|Sub], List) :- select(X, List, Minlist), subist(Sub, Minlist). 
+
+line(0, _) :- !.
+line(Dots, Symbol) :- print(Symbol), Dots2 is Dots - 1, line(Dots2, Symbol).
+
+
+draw(Begin, Eind) :- line(Begin, *), 
+Begin2 is Begin + 1, 
+print('nl'),
+Eind >= Begin2, 
+draw(Begin2, Eind). 
+draw(Eind, Eind).
+
+triangle(C) :- draw(0, C).
+:- op(200, fy, small).
+% there is no yfy pattern, because y is the place where its the same precedence or lower. 
+% if both sides of f held a operator with the same precedence as f, then prolog wouldt know 
+% which one comes first, so thats why there has to be an x, or just fy.
+
+:- op(300, fy, bli).
+:- op(450, xfy, bla).
+:- op(500, yf, blu).
+% rechts ervan moet altijd equal of strictly less zijn, maar dan moet bla, lager of gelijk zijn aan blibli, en bli moet lager of gelijk zijn aan blu
+% dus bli moet lager of gelijk zijn aan blibli, 
+% blu moet lager of gelijk zijn aan bli
+% blu moet lager zijn dan bli bli 
+% blibli moet lager of gelijk zijn aan bli. Dus ze moeten hetzelfde zijn
+:- op(100, yfx, plink),
+op(200, xfy, plonk).
+
+% ?- tiger plink dog plink fish = X plink Y.
+% everything on the left of plink, has a lower precedence, so its
+% ((tiger) plink dog) plink fish, which means that tiger plink dog, are grouped
+% in paranthesis because they come first, becayse of xfy pattern
+
+% ?- cow plonk elephant plink bird = X plink Y.
+% (cow plonk elephant) plink bird
+% this gails because plonk gives elephant an max precedence of 200, while
+% plink says elephant needs to have atleast 100 precedence
+
+% ?- X = (lion plink tiger) plonk (horse plink donkey).
+% because they are in paranthesis, they come first, 
+% and because horse and lion can have higher paranthesis then
+% donket and tiger, they come first as well
+% the operators all have lower precedence then plonk, so the () disaapear.
+
