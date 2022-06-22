@@ -217,4 +217,8 @@ op(200, xfy, plonk).
 % ?- cow plonk elephant plink bird = X plink Y.
 % ?- X = (lion plink tiger) plonk (horse plink donkey).
 % ?- kat doom mouse doom italian fist spouse = kat doom (mouse doom (italian fist) spouse). ???
-a
+student(ann, 44711, passed).
+student(bob, 50815, passed).
+student(pat, 41018, failed).
+student(sue, 41704, passed).
+%?- Goal = (student(Name, ID, Grade), ID < 50000), findall(Name/Grade, Goal, List).
