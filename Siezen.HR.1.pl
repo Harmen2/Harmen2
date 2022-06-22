@@ -111,3 +111,5 @@ recursion([_|Tails], Lengtetail) :- recursion(Tails, LengteTailkort), Lengtetail
 % :- op(200, fy, small) gives enable to small(elephant) = small elephant
 % " it might be better to use fx instead of fy because now you can nest it"
 % like small small elepahnt" but thats a matter of semantics
+:- op(400, yfx, *).
+:- op(500, yfx, +).
