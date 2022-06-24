@@ -229,12 +229,22 @@ swap(Rel, [A,B|List], [B, A | List]) :-
     check(Rel, B, A). %wanneer B groter is dan A, Swap ze.
 swap(Rel, [A|List], [A|NewList]) :-
     swap(Rel, List, NewList). 
+% Deze recursie is best lastig om te volgen
+swap2(Rel, [A,B|List], [B|NewList]) :-
+    check(Rel, B, A),
+    swap2(Rel, [A|List], NewList). 
+swap2(Rel, [A|List], [A|NewList]) :-
+    swap2(Rel, List, NewList).
+% Deze recurise is ook best lastig om te volgen 
+swap2(_, [], []). 
 bubblesort(Rel, List, SortedList) :-
     swap(Rel, List, NewList),
     !,
     bubblesort(Rel, NewList, SortedList).
 bubblesort(_, SortedList, SortedList).
-% Deze recursie is best lastig om te volgen
-swap2(Rel, [A,B|List], [B|NewList]) :-
-    check(Rel, B, A),
-    swap2(Re, [A|List], NewList). 
+bubblesort2(Rel, List, SortedList):- 
+    swap2(Rel, List, NewList), % always succeeds, want hij gaat sowieso door de heele lijst heen, of er nou wel of niet iets veranderd
+    List \= NewList, %check that there was a swap 
+    !,
+    bubblesort2(Rel, NewList, SortedList).
+bubblesort2(_, SortedList, SortedList). 
