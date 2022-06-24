@@ -222,3 +222,19 @@ student(bob, 50815, passed).
 student(pat, 41018, failed).
 student(sue, 41704, passed).
 %?- Goal = (student(Name, ID, Grade), ID < 50000), findall(Name/Grade, Goal, List).
+check(Rel, A, B) :- 
+    Goal =.. [Rel, A, B],
+    call(Goal).
+swap(Rel, [A,B|List], [B, A | List]) :- 
+    check(Rel, B, A). %wanneer B groter is dan A, Swap ze.
+swap(Rel, [A|List], [A|NewList]) :-
+    swap(Rel, List, NewList). 
+bubblesort(Rel, List, SortedList) :-
+    swap(Rel, List, NewList),
+    !,
+    bubblesort(Rel, NewList, SortedList).
+bubblesort(_, SortedList, SortedList).
+% Deze recursie is best lastig om te volgen
+swap2(Rel, [A,B|List], [B|NewList]) :-
+    check(Rel, B, A),
+    swap2(Re, [A|List], NewList). 
