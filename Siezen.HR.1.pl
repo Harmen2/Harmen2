@@ -248,3 +248,68 @@ bubblesort2(Rel, List, SortedList):-
     !,
     bubblesort2(Rel, NewList, SortedList).
 bubblesort2(_, SortedList, SortedList). 
+
+%Base case: the empty list is sorted
+quicksort(_, [], []). 
+/* Recursive call: remove the' ' from the
+* unsorted list and split the 'Tail" into elements
+* 'left' and 'right' of the pivot using 'rel' */  
+quicksort(Rel,[Head|Tail], SortedList) :-
+    split(Rel, Head, Tail, Left, Right), % splitting, not yet defined 
+    quicksort(Rel, Left, SortedLeft), % sort'left'
+    quicksort(Rel, Right, SortedRight), % sort right
+    append(sortedLeft, [Head|SortedRight], SortedList).
+%Base case: empty list split into two empty lists 
+split(_, _, [], [], []). 
+
+% if Head is smaller than Middle, include it in LEft 
+split(Rel, Middle, [Head|Tail], [Head | Left], Right) :- 
+check(Rel, Head, Middle), 
+!,
+split(Rel, Middle, Tail, Left, Right).
+
+% otherwise, include Head in Right  
+split(Rel, Middle, [Head|Tail], Left, [Head|Right]) :- 
+    split(Rel, Middle, Tail, Left, Right). % hoe gaat met met e
+move(Stacks, NewStacks) :-
+    select([Top|Stacks1], Stacks, Rest),
+    select(Stack2, Rest, Otherstacks),
+    NewStacks = [Stack1, [Top|Stack2]|Otherstacks].
+goal(Stacks) :- member([a,b,c], Stacks). % one of the 3 elements, need to be that lis.
+depthfirst(Nodem, []) :-
+    goal(Node).
+depthfirst(Node, []) :-
+    goal(Node). %this still needs to be defined! but it is defined now with ^ 
+depthfirst(Node, [NextNode]|Path) :-
+    move(Node, NextNode),
+    depthfirst(NextNode, Path). 
+solve_depthfirst(Node, [Node|Path]) :-
+    depthfirst(Node, Path). 
+% ?- solve_depthifrst([[a,b,c,],[].[]], PLan).
+move_cyclefree(Visited, Node, NextNode) :-
+    move(Node, NextNode),
+    \+ member(NextNode, Visited).
+% Visited is instantiated with the list of nodes visited already. 
+depthfirst_cyclefree(Visited, Noce, Visited) :- % base case
+    goal(Node).
+depthfirst_cyclefree(Visited, Node, Path) :- % to get the right path, without the ones visited
+    move_cyclefree(Visited, Node, NextNode),% the moment you backtrack, you Variabele Visited will exclude the visited when backtracked reversed. 
+    depthfirst_cyclefree([NextNode|Visited], NextNode, Path).
+solve_depthfirst_cyclefree(Node, Path) :-
+    depthfirst_cyclefree([Node], Node, RevPath),
+    reverse(RevPath, Path). 
+% a shorter solution, doesnt take 60 moves to find
+solve_depthfirst_bound(Bound, Node, Path) :-
+    depthfirst_bound(Bound, [Node], Node, RevPath),
+    reverse(RevPath, Path).
+%goal reached
+depthfirst_bound(_, Visited, Node, Visited) :-
+    goal(Node).
+%recursive call, counting down in 'bound'
+depthfirst_bound(Bound, Visited, Node, Path) :-
+    Bound > 0,
+    move_cyclefree(Visited, Node, NextNode),
+    NewBound is Bound - 1,
+    depthfirst_bound(NewBound, [NextNode|Visited], NextNode, Path).
+
+
