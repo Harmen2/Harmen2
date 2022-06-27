@@ -311,5 +311,60 @@ depthfirst_bound(Bound, Visited, Node, Path) :-
     move_cyclefree(Visited, Node, NextNode),
     NewBound is Bound - 1,
     depthfirst_bound(NewBound, [NextNode|Visited], NextNode, Path).
+solve_breathfirst(Node, Path) :-
+    breadthfirst([[Node]], RevPath), 
+    reverse(RevPath, Path). 
+breadthfirst([[Node|Path]|_], [Node|Path]) :-
+    goal(Node).
+breadthfirst([Path|Paths], SolutionPath) :-
+    expand_breadthfirst(Path, ExpPaths),
+    append(Paths, ExpPaths, NewPaths),
+    breadthfirst(NewPaths, SolutionPath). 
+expand_breadthfirst([Node|Path], ExpPaths) :-
+    findall([NewNode, Node | Path], 
+        move_cyclefree(Path, Node, NewNode),
+    ExpPaths).
+path(Node, Node, [Node]).
+path(FirstNode, LastNode, [LastNode|Path]) :- 
+    path(FirstNode, SecondLastNode, Path),
+    move_cyclefree(Path, SecondLastNode, LastNode). % after backtracking, this rule is used to allow a different intermediate step.  
+solve_iterative_deepening(Node, Path) :-
+    path(Node, GoalNode, RevPath),
+    goal(GoalNode),
+    reverse(RevPath, Path). 
+solve_astar(Node, Path/Cost) :-
+    estimate(Node, Estimate),
+    astar([[Node]/0/Estimate], RevPath/Cost/_), %we dont case about the estimate if weve already found the answer (_)
+    reverse(RevPath, Path). % [Node] has todo with the todo list. 
+move_astar([Node|Path]/Cost/_, [NextNode, Node|Path]/NewCost/Est) :-
+     move(Node, NextNode, StepCost), % use the original move/3
+     \+ member(NextNode, Path), % prevent cycles
+     NewCost is Cost + StepCost, % update cost of current path
+     estimate(NextNode, Est). % estimate for the new path
+expand_astar(Path, ExpPaths) :-
+    findall(NewPath, move_astar(Path, NewPath), ExpPaths). 
+%base case
+get_best([Path], Path) :- !. % if i dont have a choise, then this is the best one. ! for we dont want to allow backtracking from first get_best to second get_best. 
+% because that would give us the example of when we have the empty list in the first argument. it says: If there is only 1 thing in youre list, then that is the 
+% best thing in youre list, and there is no second best thing
+/* recursive call: from a list of labelled paths, select one that
+ * minimizes the sum of current cost and current estimate. */
+get_best([Path,1/Cost1/Est1, _/Cost2/Est2 | Paths], BestPath) :-
+    Cost1 + Est1 =< Cost2 + Est2, !, % if 1 is lower or equal then the 2, then you can ignore the second path.
+    get_best([Path1/Cost1/Est1 | Paths], BestPath).
+get_best([_ | Paths], BestPath) :- % this allows backtracking for finding a second best thing. 
+    get_best(Paths, BestPath). % and ofoucrse if the second fails. if path 1 isnt lowe then 2.
+% stop in case the best path ends in a goal node
+astar(Paths, Path) :-
+    get_best(Paths, Path),
+    Path = [Node|_]/_/_,
+    goal(Node).
+/* Otherwise, extract Best path, generate all expansions, and 
+ * continue with union of remaining and expanded paths: */
 
-
+astar(Paths, SolutionPath) :-
+    get_best(Paths, BestPath),
+    select(BestPath, Paths, OtherPaths),
+    expand_astar(BestPath, ExpPaths),
+    append(OtherPaths, ExpPaths, NewPaths),
+    astar(NewPaths, SolutionPath).
